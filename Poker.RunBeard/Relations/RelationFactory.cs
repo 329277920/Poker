@@ -20,7 +20,7 @@ namespace Poker.RunBeard.Relations
             List<IRelation> relations = new List<IRelation>();
             foreach (var cardArray in new CardSameResolver().Resolve(cards))
             {
-
+                 
             }
             return relations.ToArray();
         }
