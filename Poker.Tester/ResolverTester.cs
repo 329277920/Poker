@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Poker.RunBeard;
-using Poker.RunBeard.Relations.CardResolvers;
 using System.Linq;
+using Poker.RunBeard.CardResolvers;
 
 namespace Poker.Tester
 {
