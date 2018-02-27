@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Poker", "Poker\Poker.csproj", "{78F506BD-B666-43B9-9F11-CCB1650702A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Poker.RunBeard", "Poker.RunBeard\Poker.RunBeard.csproj", "{A8459DE1-B35B-42DB-B0F0-BD10BA624959}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker.Tester", "Poker.Tester\Poker.Tester.csproj", "{1A6117CD-9363-4E2A-8E91-EDA85EFB5C90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78F506BD-B666-43B9-9F11-CCB1650702A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F506BD-B666-43B9-9F11-CCB1650702A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F506BD-B666-43B9-9F11-CCB1650702A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F506BD-B666-43B9-9F11-CCB1650702A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8459DE1-B35B-42DB-B0F0-BD10BA624959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8459DE1-B35B-42DB-B0F0-BD10BA624959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8459DE1-B35B-42DB-B0F0-BD10BA624959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8459DE1-B35B-42DB-B0F0-BD10BA624959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A6117CD-9363-4E2A-8E91-EDA85EFB5C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A6117CD-9363-4E2A-8E91-EDA85EFB5C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A6117CD-9363-4E2A-8E91-EDA85EFB5C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A6117CD-9363-4E2A-8E91-EDA85EFB5C90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70A4E8CC-B910-446F-912F-229986A4A39D}
+	EndGlobalSection
+EndGlobal
