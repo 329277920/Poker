@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Poker.RunBeard;
 
 namespace Poker.Tester
 {
@@ -15,9 +16,9 @@ namespace Poker.Tester
         public void TestBuildFixedRelations()
         {
             var source = CardSource(21);
-            foreach (var relation in RelationFactory.BuildFixedRelations(source))
+            foreach (var relation in RelationFactory.BuildFixedRelations(source, out Card[] outputCards))
             {
-                Console.WriteLine("{0}:{1}", relation.RelationType, string.Join(",", from card in relation.Cards select card.ToString()));
+                WriteLine(relation);
             }
         }
 
@@ -28,9 +29,9 @@ namespace Poker.Tester
         public void TestBuildVariableRelations()
         {            
             var source = CardSource(21);
-            foreach (var relation in RelationFactory.BuildVariableRelations(source))
+            foreach (var relation in RelationFactory.BuildVariableRelations(source, out Card[] outputCards))
             {
-                Console.WriteLine("{0}:{1}", relation.RelationType, string.Join(",", from card in relation.Cards select card.ToString()));
+                WriteLine(relation);
             }
         }
 
@@ -41,9 +42,9 @@ namespace Poker.Tester
         public void TestBuildVariableRelations2()
         {           
             var source = CardSource(21);
-            foreach (var relation in RelationFactory.BuildVariableRelations(source, source[0].Id))
+            foreach (var relation in RelationFactory.BuildVariableRelations(source, out Card[] outputCards, source[0].Id))
             {
-                Console.WriteLine("{0}:{1}", relation.RelationType, string.Join(",", from card in relation.Cards select card.ToString()));
+                WriteLine(relation);                 
             }
         }
 
@@ -54,9 +55,9 @@ namespace Poker.Tester
         public void BuildVariableRelationsBySelf()
         {
             var source = CardSource(21);
-            foreach (var relation in RelationFactory.BuildVariableRelationsBySelf(source, source[0].Id))
+            foreach (var relation in RelationFactory.BuildVariableRelationsBySelf(source,out Card[] outputCards, source[0].Id))
             {
-                Console.WriteLine("{0}:{1}", relation.RelationType, string.Join(",", from card in relation.Cards select card.ToString()));
+                WriteLine(relation);                 
             }
         }
     }

@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="BaseTester.cs" />
     <Compile Include="CardFactoryTester.cs" />
+    <Compile Include="GameRegulationTester.cs" />
     <Compile Include="RelationFactoryTester.cs" />
     <Compile Include="ResolverTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
