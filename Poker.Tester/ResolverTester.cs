@@ -3,11 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Poker.RunBeard;
 using System.Linq;
 using Poker.RunBeard.CardResolvers;
+using Poker.RunBeard.Relations;
 
 namespace Poker.Tester
 {
     [TestClass]
-    public class ResolverTester
+    public class ResolverTester : BaseTester
     {
         [TestMethod]
         public void TestCardSameResolver()
@@ -24,14 +25,14 @@ namespace Poker.Tester
         public void TestCardThreeResolver()
         {
             var source = CardSource(5);
-            Console.WriteLine(string.Join(",",source.Select(card => card.ToString())));
+            
             foreach (var cards in new CardThreeResolver().Resolve(source))
             {
                 System.Diagnostics.Debug.WriteLine(
                     string.Join(",", from card in cards select card.ToString())
                     );
             }
-        }
+        }        
 
         [TestMethod]
         public void TestCardThreeResolver2()
@@ -46,11 +47,6 @@ namespace Poker.Tester
             }
         }
 
-        private Card[] CardSource(int num)
-        {
-            return (from card in (from card in CardFactory.Build().Take(num) select card)
-                    orderby card.Num ascending, card.IsLarge descending
-                    select card).ToArray();
-        }
+       
     }
 }

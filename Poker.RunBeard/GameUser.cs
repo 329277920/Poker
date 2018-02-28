@@ -41,7 +41,7 @@ namespace Poker.RunBeard
         /// <summary>
         /// 是否准备
         /// </summary>
-        public bool IsReady { get; set; }
+        public bool IsReady { get; set; }        
 
         public GameUser()
         {

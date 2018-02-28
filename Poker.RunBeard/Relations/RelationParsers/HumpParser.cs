@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Poker.RunBeard.Relations.RelationParsers
+namespace Poker.RunBeard.Relations
 {
     /// <summary>
     /// 驼峰式关系

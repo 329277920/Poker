@@ -17,7 +17,7 @@ namespace Poker.RunBeard.CardResolvers
             var code = 0;
             for (var i = 0; i < cards.Length; i++)
             {
-                if (cardIds != null && !cardIds.Contains(cards[i].Id))
+                if (cardIds != null && cardIds.Length > 0 && !cardIds.Contains(cards[i].Id))
                 {
                     continue;
                 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Poker.RunBeard.Relations
 {
-    public class SameFourParser : SameBaseParser
+    public class SameFourParser : SameBaseParser, IRelationParser
     {
         /// <summary>
         /// 当前解析相同牌的数量

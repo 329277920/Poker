@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Poker.RunBeard.Relations.RelationParsers
+namespace Poker.RunBeard.Relations
 {
-    public class SameTwoSelfParser : SameBaseParser
+    public class SameTwoSelfParser : SameBaseParser, IRelationParser
     {
         /// <summary>
         /// 当前解析相同牌的数量

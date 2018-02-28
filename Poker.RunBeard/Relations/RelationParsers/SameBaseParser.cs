@@ -7,7 +7,7 @@ namespace Poker.RunBeard.Relations
     /// <summary>
     /// 解析出相同的牌
     /// </summary>
-    public abstract class SameBaseParser : IRelationParser
+    public abstract class SameBaseParser
     {
         /// <summary>
         /// 当前解析相同牌的数量
