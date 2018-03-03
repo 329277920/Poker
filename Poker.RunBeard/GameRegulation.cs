@@ -35,6 +35,55 @@ namespace Poker.RunBeard
                 );
         }
 
+        /// <summary>
+        /// 计算当前用户对当前牌允许的操作，不包含胡牌
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="currCard"></param>
+        /// <returns></returns>
+        public static IRelation[] CardOperations(GameUser user, CardPlay currCard)
+        {           
 
+            var isCurrUser = currCard.User.UserName.Equals(user.UserName);
+            var isNext = !isCurrUser && currCard.User.NextUser.UserName.Equals(user.UserName);
+
+            // 从固定规则中解析出跑、清
+            IRelation outputRelation;
+            var relation = RelationFactory.BuildRelationsByRelations(user.SelfRelations.ToArray(), out outputRelation, currCard.Card, currCard.IsUserPay, isCurrUser);
+            if (relation == null)
+            {
+                relation = RelationFactory.BuildRelationsByRelations(user.Relations.ToArray(), out outputRelation, currCard.Card, currCard.IsUserPay, isCurrUser);
+            }
+            if (relation != null)
+            {
+                return new IRelation[] { relation };               
+            }
+
+            // 解析出其他规则
+            Card[] outputCards;
+            List<Card> tempCards = new List<Card>();
+            tempCards.AddRange(user.Cards);
+            tempCards.Add(currCard.Card);
+            // 当前用户，解析出吃或提
+            if (isCurrUser)
+            {
+                return RelationFactory.BuildVariableRelationsBySelf(tempCards.ToArray(),
+                    out outputCards, currCard.Card.Id);
+            }
+            // 其他用户
+            else
+            {
+                // 不是下家，只能碰
+                if (!isNext)
+                {
+                    return RelationFactory.BuildCustomVariableRelations(tempCards.ToArray(),
+                        new int[] { currCard.Card.Id }, out outputCards,
+                        ParserDefines.SameThreeParser);
+                }
+                // 下家，可以碰、吃
+                return RelationFactory.BuildVariableRelations(tempCards.ToArray(),
+                    out outputCards, currCard.Card.Id);
+            }                         
+        }
     }
 }

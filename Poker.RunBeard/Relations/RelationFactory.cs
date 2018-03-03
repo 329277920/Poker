@@ -61,10 +61,20 @@ namespace Poker.RunBeard.Relations
         /// <returns></returns>
         public static IRelation[] BuildVariableRelationsBySelf(Card[] cards, out Card[] outputCards, params int[] cardIds)
         {
-            return BuildCustomVariableRelations(cards, cardIds, out outputCards,
+            var relations = BuildCustomVariableRelations(cards, cardIds, out outputCards,
                 ParserDefines.SameThreeSelfParser,
                 ParserDefines.HumpParser,
-                ParserDefines.StraightParser);             
+                ParserDefines.StraightParser);
+            foreach (var relation in relations)
+            {
+                // 判断如果包含提，则直接返回
+                if (relation.RelationType == RelationTypes.LLL || relation.RelationType == RelationTypes.SSS)
+                {
+                    outputCards = relation.Cards;
+                    return new IRelation[] { relation };
+                }
+            }
+            return relations;
         }
 
         /// <summary>
@@ -105,5 +115,59 @@ namespace Poker.RunBeard.Relations
             outputCards = includeCards.ToArray();
             return relations.ToArray();
         }
+
+        /// <summary>
+        /// 从固定规则中生成新规则，跑、提
+        /// </summary>
+        /// <param name="relations">已经规定的规则，包括碰、提</param>
+        /// <param name="outputRelation">输出被变更的规则</param>
+        /// <param name="card">当前的牌</param>
+        /// <param name="isUserPlay">是否为用户打出的牌</param>
+        /// <param name="isCurrUser">是否为当前用户</param>
+        /// <returns></returns>
+        public static IRelation BuildRelationsByRelations(IRelation[] relations, out IRelation outputRelation, Card card, bool isUserPlay, bool isCurrUser)
+        {
+            outputRelation = null;
+            List<Card> tempCards = new List<Card>();
+            IRelation resultRelation = null;
+            foreach (var relation in relations)
+            {
+                // 校验是否能跑
+                if (relation.RelationType == RelationTypes.LLL || relation.RelationType == RelationTypes.SSS)
+                {
+                    // 用户打出的牌，不允许碰-》跑
+                    if (isUserPlay)
+                    {
+                        continue;
+                    }
+                    tempCards.AddRange(relation.Cards);
+                    tempCards.Add(card);
+                    resultRelation = ParserFactory.Instance(ParserDefines.SameFourParser).Parse(tempCards.ToArray());
+                }
+
+                // 校验是否能跑、清
+                if (relation.RelationType == RelationTypes.LLL_Self || relation.RelationType == RelationTypes.SSS_Self)
+                {                     
+                    tempCards.AddRange(relation.Cards);
+                    tempCards.Add(card);
+                    if (isCurrUser)
+                    {
+                        // 检测清
+                        resultRelation = ParserFactory.Instance(ParserDefines.SameFourSelfParser).Parse(tempCards.ToArray());
+                    }
+                    else
+                    {
+                        // 检测跑
+                        resultRelation = ParserFactory.Instance(ParserDefines.SameFourParser).Parse(tempCards.ToArray());
+                    }
+                }
+                if (resultRelation != null)
+                {
+                    outputRelation = relation;
+                    break;
+                }                 
+            }
+            return resultRelation;
+        }         
     }
 }
