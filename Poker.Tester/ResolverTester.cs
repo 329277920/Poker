@@ -12,50 +12,26 @@ namespace Poker.Tester
     [TestClass]
     public class ResolverTester : BaseTester
     {
-        public bool Compare<T>(T x, T y)
-        {
-            return EqualityComparer<T>.Default.Equals(x, y);
-        }
-
         [TestMethod]
-        public void Test()
+        public void TestSameResolver()
         {
-            System.Diagnostics.Debug.WriteLine(Compare<object>(null, null));
-        }
+            var source = CardSource(21);
 
-        [TestMethod]
-        public void TestCardSameResolver()
-        {            
-            foreach (var cards in new CardSameResolver().Resolve(CardSource(20)))
-            {
+            var groups1 = new SameResolver().Resolve(source, 2).ToArray();
+
+            for (var i = 0; i < groups1.Count(); i++)
+            {              
                 System.Diagnostics.Debug.WriteLine(
-                    string.Join(",", from card in cards select card.ToString())
+                    string.Join(",", groups1[i].Select(item => item.ToString()))
                     );
             }
-        }
 
-        [TestMethod]
-        public void TestCardThreeResolver()
-        {
-            var source = CardSource(5);
-            
-            foreach (var cards in new CardThreeResolver().Resolve(source))
+            var groups2 = new SameResolver().Resolve(source, 3).ToArray();
+
+            for (var i = 0; i < groups2.Count(); i++)
             {
                 System.Diagnostics.Debug.WriteLine(
-                    string.Join(",", from card in cards select card.ToString())
-                    );
-            }
-        }        
-
-        [TestMethod]
-        public void TestCardThreeResolver2()
-        {
-            var source = CardSource(5);
-            Console.WriteLine(string.Join(",", source.Select(card => card.ToString())));
-            foreach (var cards in new CardThreeResolver().Resolve(source, source[0].Id, source[1].Id))
-            {
-                System.Diagnostics.Debug.WriteLine(
-                    string.Join(",", from card in cards select card.ToString())
+                    string.Join(",", groups2[i].Select(item => item.ToString()))
                     );
             }
         }
@@ -66,7 +42,7 @@ namespace Poker.Tester
         {
             var source = CardSource(21);
 
-            var groups1 = new NoneResolver().Resolve<Card>(source, 3, (t1, t2) => t1 == t2).ToArray();
+            var groups1 = new NoneResolver().Resolve(source, 3).ToArray();
 
             var groups2 = new CardThreeResolver().Resolve(source).ToArray();
 
