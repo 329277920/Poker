@@ -7,7 +7,7 @@ namespace Poker.RunBeard
     /// <summary>
     /// 定义一张纸牌
     /// </summary>
-    public class Card
+    public class Card : ICard
     {
         /// <summary>
         /// 唯一编号(1-80)
@@ -32,7 +32,8 @@ namespace Poker.RunBeard
         /// <summary>
         /// 获取或设置该牌的Code值，小牌为1-10，大牌未11-20
         /// </summary>
-        public int Code { get { return IsLarge ? 10 + Num : Num; } }
+        public int Code {
+            get { return IsLarge ? 10 + Num : Num; }}
         
         public override string ToString()
         {

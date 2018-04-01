@@ -38,7 +38,7 @@ namespace Poker.Tester
         {
             var cards = CardSource(80);
 
-            var user = new GameUser() { UserName = "cnf", Cards = cards.Take(20).ToArray() };
+            // var user = new GameUser() { UserName = "cnf", Cards = cards.Take(20).ToArray() };
         }
     }
 }

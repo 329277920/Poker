@@ -87,6 +87,10 @@
       <Project>{a8459de1-b35b-42db-b0f0-bd10ba624959}</Project>
       <Name>Poker.RunBeard</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Poker\Poker.csproj">
+      <Project>{78F506BD-B666-43B9-9F11-CCB1650702A4}</Project>
+      <Name>Poker</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
