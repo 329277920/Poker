@@ -1,4 +1,4 @@
-﻿using Poker.RunBeard.CardResolvers;
+﻿using Poker.Resolvers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +20,7 @@ namespace Poker.RunBeard.Relations
         {
             List<IRelation> relations = new List<IRelation>();
             List<Card> includeCards = new List<Card>();
-            foreach (var cardArray in new CardSameResolver().Resolve(cards))
+            foreach (var cardArray in new SameResolver().Resolve(cards, 0))
             {
                 var relation = ParserFactory.Instance(ParserDefines.SameFourSelfParser).Parse(cardArray);
                 if (relation == null)
@@ -42,11 +42,11 @@ namespace Poker.RunBeard.Relations
         /// </summary>
         /// <param name="cards">手中的牌，或者包括当前摸的牌</param>
         /// <param name="outputCards">输出计算该规则包含的牌</param>
-        /// <param name="cardIds">在生成的规则中，必须包含某几张牌的Id</param>
+        /// <param name="filterCards">在生成的规则中，必须包含某几张牌的Id</param>
         /// <returns></returns>
-        public static IRelation[] BuildVariableRelations(Card[] cards, out Card[] outputCards, params int[] cardIds)
+        public static IRelation[] BuildVariableRelations(Card[] cards, out Card[] outputCards, params Card[] filterCards)
         {
-            return BuildCustomVariableRelations(cards, cardIds, out outputCards,
+            return BuildCustomVariableRelations(cards, filterCards, out outputCards,
                 ParserDefines.SameThreeParser,
                 ParserDefines.HumpParser,
                 ParserDefines.StraightParser);             
@@ -57,11 +57,11 @@ namespace Poker.RunBeard.Relations
         /// </summary>
         /// <param name="cards">手中的牌，或者包括当前摸的牌</param>
         /// <param name="outputCards">输出计算该规则包含的牌</param>
-        /// <param name="cardIds">在生成的规则中，必须包含某几张牌的Id</param>
+        /// <param name="filterCards">在生成的规则中，必须包含某几张牌的Id</param>
         /// <returns></returns>
-        public static IRelation[] BuildVariableRelationsBySelf(Card[] cards, out Card[] outputCards, params int[] cardIds)
+        public static IRelation[] BuildVariableRelationsBySelf(Card[] cards, out Card[] outputCards, params Card[] filterCards)
         {
-            var relations = BuildCustomVariableRelations(cards, cardIds, out outputCards,
+            var relations = BuildCustomVariableRelations(cards, filterCards, out outputCards,
                 ParserDefines.SameThreeSelfParser,
                 ParserDefines.HumpParser,
                 ParserDefines.StraightParser);
@@ -81,15 +81,15 @@ namespace Poker.RunBeard.Relations
         /// 从手中的牌生成所有可变的规则集合（3张）
         /// </summary>
         /// <param name="cards">手中的牌，或者包括当前摸的牌</param>
-        /// <param name="cardIds">在生成的规则中，必须包含某几张牌的Id</param>
+        /// <param name="filterCards">在生成的规则中，必须包含某几张牌的Id</param>
         /// <param name="includeCards">输出计算该规则包含的牌</param>
         /// <param name="parsers">解析规则列表</param>
         /// <returns></returns>
-        public static IRelation[] BuildCustomVariableRelations(Card[] cards, int[] cardIds, out Card[] outputCards,  params ParserDefines[] parsers)
+        public static IRelation[] BuildCustomVariableRelations(Card[] cards, Card[] filterCards, out Card[] outputCards,  params ParserDefines[] parsers)
         {
             List<IRelation> relations = new List<IRelation>();
             List<Card> includeCards = new List<Card>();
-            foreach (var cardArray in new CardThreeResolver().Resolve(cards, cardIds))
+            foreach (var cardArray in new NoneResolver().Resolve<Card>(cards,3, filterCards))
             {
                 IRelation relation = null;
                 foreach (var parser in parsers)

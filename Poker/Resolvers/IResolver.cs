@@ -16,6 +16,7 @@ namespace Poker.Resolvers
         /// <param name="size">分组大小</param>        
         /// <param name="filterCards">分解出的每一组牌，必须包含filterCards中定义的牌</param>
         /// <returns>返回按规则分组后的牌</returns>
-        IEnumerable<ICard[]> Resolve(ICard[] cards, int size, params ICard[] filterCards);
+        IEnumerable<TCard[]> Resolve<TCard>(TCard[] cards, int size, params TCard[] filterCards)
+            where TCard : ICard;
     }
 }

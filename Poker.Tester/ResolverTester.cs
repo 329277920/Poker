@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Poker.RunBeard;
 using System.Linq;
-using Poker.RunBeard.CardResolvers;
 using Poker.RunBeard.Relations;
 using System.Collections.Generic;
 using Poker.Resolvers;
@@ -42,24 +41,13 @@ namespace Poker.Tester
         {
             var source = CardSource(21);
 
-            var groups1 = new NoneResolver().Resolve(source, 3).ToArray();
-
-            var groups2 = new CardThreeResolver().Resolve(source).ToArray();
-
-            if (groups1.Count() != groups2.Count())
-            {
-                Assert.Fail("数量不一致");
-            }
+            var groups1 = new NoneResolver().Resolve(source, 3).ToArray();                        
 
             for (var i = 0; i < groups1.Count(); i++)
             {
                 var str1 = string.Join(",", groups1[i].Select(item => item.ToString()));
-                var str2 = string.Join(",", groups2[i].Select(item => item.ToString()));
-                if (str1 != str2)
-                {
-                    Assert.Fail("结果不一致");
-                }
-                System.Diagnostics.Debug.WriteLine(str1 + "  " + str2);
+               
+                System.Diagnostics.Debug.WriteLine(str1);
             }
         }
     }

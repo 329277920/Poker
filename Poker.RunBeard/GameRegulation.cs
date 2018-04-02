@@ -68,7 +68,7 @@ namespace Poker.RunBeard
             if (isCurrUser)
             {
                 return RelationFactory.BuildVariableRelationsBySelf(tempCards.ToArray(),
-                    out outputCards, currCard.Card.Id);
+                    out outputCards, currCard.Card);
             }
             // 其他用户
             else
@@ -77,12 +77,12 @@ namespace Poker.RunBeard
                 if (!isNext)
                 {
                     return RelationFactory.BuildCustomVariableRelations(tempCards.ToArray(),
-                        new int[] { currCard.Card.Id }, out outputCards,
+                        new Card[] { currCard.Card }, out outputCards,
                         ParserDefines.SameThreeParser);
                 }
                 // 下家，可以碰、吃
                 return RelationFactory.BuildVariableRelations(tempCards.ToArray(),
-                    out outputCards, currCard.Card.Id);
+                    out outputCards, currCard.Card);
             }                         
         }
     }

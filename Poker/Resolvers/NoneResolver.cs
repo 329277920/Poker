@@ -16,21 +16,22 @@ namespace Poker.Resolvers
         /// <param name="size">分组大小</param>        
         /// <param name="filterCards">分解出的每一组牌，必须包含filterCards中定义的牌</param>
         /// <returns>返回按规则分组后的牌</returns>
-        public virtual IEnumerable<ICard[]> Resolve(ICard[] cards, int size, params ICard[] filterCards)           
+        public virtual IEnumerable<TCard[]> Resolve<TCard>(TCard[] cards, int size, params TCard[] filterCards)
+            where TCard : ICard
         {
             if (size <= 1 || size > cards.Length)
             {
                 throw new ArgumentException("参数size必须大于1，小于或等于cards长度。");
             }
 
-            List<ICard[]> cardGroups = new List<ICard[]>();
+            List<TCard[]> cardGroups = new List<TCard[]>();
 
             // 计算需要为多少张牌计算组合
             var startCards = filterCards != null && filterCards.Length > 0
                 ? filterCards : cards;
 
             // 复制cards副本
-            var newCards = new ICard[cards.Length];
+            var newCards = new TCard[cards.Length];
             for (var i = 0; i < cards.Length; i++)
             {
                 newCards[i] = cards[i];
@@ -44,8 +45,9 @@ namespace Poker.Resolvers
             return cardGroups;
         }
 
-        private void ResolveItem(List<ICard[]> cardGroups, ICard[] cards,
-            int size, int start, params ICard[] tempCards)
+        private void ResolveItem<TCard>(List<TCard[]> cardGroups, TCard[] cards,
+            int size, int start, params TCard[] tempCards)
+            where TCard : ICard
         {
             for (var i = start; i < cards.Length; i++)
             {
@@ -61,11 +63,11 @@ namespace Poker.Resolvers
                 if (tempCards[0].Id == currCard.Id)
                 // if (EqualityComparer<TCard>.Default.Equals(tempCards[0], currCard))
                 {
-                    cards[i] = null;
+                    cards[i] = default(TCard);
                     continue;
                 }
                 // 将当前牌加入到tempCards,做为下一轮计算的前缀
-                var nextCards = new ICard[tempCards.Length + 1];
+                var nextCards = new TCard[tempCards.Length + 1];
                 for (var j = 0; j < tempCards.Length; j++)
                 {
                     nextCards[j] = tempCards[j];

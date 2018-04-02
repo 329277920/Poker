@@ -16,10 +16,11 @@ namespace Poker.Resolvers
         /// <param name="size">分组大小</param>       
         /// <param name="filterCards">分解出的每一组牌，必须包含filterCards中定义的牌</param>
         /// <returns>返回按规则分组后的牌</returns>
-        public virtual IEnumerable<ICard[]> Resolve(ICard[] cards, int size,  params ICard[] filterCards)
+        public virtual IEnumerable<TCard[]> Resolve<TCard>(TCard[] cards, int size,  params TCard[] filterCards)
+            where TCard : ICard
         {            
-            List<ICard[]> cardGroups = new List<ICard[]>();
-            var temp = new List<ICard>();
+            List<TCard[]> cardGroups = new List<TCard[]>();
+            var temp = new List<TCard>();
             var code = 0;
             for (var i = 0; i < cards.Length; i++)
             {                
@@ -35,7 +36,8 @@ namespace Poker.Resolvers
             return cardGroups;
         }
 
-        private void AddGroup(List<ICard[]> cardGroups, ICard[] group, int size, params ICard[] filterCards)
+        private void AddGroup<TCard>(List<TCard[]> cardGroups, TCard[] group, int size, params TCard[] filterCards)
+            where TCard : ICard
         {
             if (group.Length > 0 && (size <= 0 || group.Length == size))
             {
